@@ -1,2 +1,2 @@
-graphix @ git+https://github.com/thierry-martinez/graphix@vbqc2
+graphix @ git+https://github.com/benjvmin93/graphix@dm-simu-rust
 stim>=1.13,<2
