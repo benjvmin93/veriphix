@@ -109,7 +109,7 @@ class TimeSuite:
         for _ in range(self.nSimulations):
             vbqc_simulation(impl=impl, noise_level=self.noise_level)
 
-ts = TimeSuite(nSimulations=1, noise_level=0.15)
+ts = TimeSuite(nSimulations=5, noise_level=0.15)
 ts.test_consistency()
 
 def benchmark(ts, impl, identifier=""):
@@ -123,5 +123,5 @@ def benchmark(ts, impl, identifier=""):
     print(s.getvalue())
 
 
-benchmark(ts, graphix.sim.density_matrix.DensityMatrix, "client|density_matrix")
-benchmark(ts, graphix.sim.density_matrix.RustDensityMatrix, "client|density_matrix")
+benchmark(ts, graphix.sim.density_matrix.DensityMatrix, "vbqc|density_matrix")
+benchmark(ts, graphix.sim.density_matrix.RustDensityMatrix, "vbqc|density_matrix")
