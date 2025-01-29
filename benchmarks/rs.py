@@ -6,6 +6,8 @@ from graphix import Circuit
 import graphix.command
 from graphix.states import BasicStates
 
+from graphix.random_objects import rand_circuit
+
 from veriphix.client import Client, Secrets
 
 import cProfile, pstats, io
@@ -16,7 +18,7 @@ def create_pattern():
     circuit.h(0)
     circuit.h(1)
     pattern = circuit.transpile().pattern  ## 6 nodes
-    pattern.standardize()
+    pattern.minimize_space()
 
     ## Measure output nodes, to have classical output
     classical_output = pattern.output_nodes
@@ -123,5 +125,5 @@ def benchmark(ts, impl, identifier=""):
     print(s.getvalue())
 
 
-benchmark(ts, graphix.sim.density_matrix.DensityMatrix, "vbqc|density_matrix")
-benchmark(ts, graphix.sim.density_matrix.RustDensityMatrix, "vbqc|density_matrix")
+benchmark(ts, graphix.sim.density_matrix.DensityMatrix, "trappifiedCanvas|client|density_matrix")
+benchmark(ts, graphix.sim.density_matrix.RustDensityMatrix, "trappifiedCanva|client|density_matrix")
