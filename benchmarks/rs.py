@@ -56,7 +56,6 @@ def vbqc_simulation(impl=DensityMatrix, noise_level=0.):
     n_failed_traps = 0
 
     backend = DensityMatrixBackend(impl=impl)
-    print(f"============================ VBQC simulation with {backend.state} ============================")
 
     # Iterating through rounds
     for i in rounds:
@@ -102,7 +101,8 @@ class TimeSuite:
 
 
     def test_consistency(self):
-        for _ in range(self.nSimulations):
+        print(f"Running test of consistency")
+        for _ in range(self.nSimulations): 
             np_result = vbqc_simulation(impl=DensityMatrix, noise_level=self.noise_level)
             rust_result = vbqc_simulation(impl=RustDensityMatrix, noise_level=self.noise_level)
             assert np_result == rust_result
@@ -111,11 +111,9 @@ class TimeSuite:
         for _ in range(self.nSimulations):
             vbqc_simulation(impl=impl, noise_level=self.noise_level)
 
-ts = TimeSuite(nSimulations=5, noise_level=0.15)
-ts.test_consistency()
-
 def benchmark(ts, impl, identifier=""):
     pr = cProfile.Profile()
+    print(f"Running benchmark on {impl}")
     pr.enable()
     ts.time_impl(impl)
     pr.disable()
@@ -123,7 +121,5 @@ def benchmark(ts, impl, identifier=""):
     ps = pstats.Stats(pr, stream=s).sort_stats(pstats.SortKey.CUMULATIVE)
     ps.print_stats(identifier)
     print(s.getvalue())
-
-
-benchmark(ts, graphix.sim.density_matrix.DensityMatrix, "trappifiedCanvas|client|density_matrix")
-benchmark(ts, graphix.sim.density_matrix.RustDensityMatrix, "trappifiedCanva|client|density_matrix")
+    
+    return ps
